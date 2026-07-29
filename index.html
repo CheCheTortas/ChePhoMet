@@ -23,20 +23,20 @@
     <main class="container">
         <!-- Featured banner (iframe to isolate banner styles) -->
         <section class="featured">
-            <iframe class="banner-embed" src="/banner-infernal.html" title="Banner Infernal — CheChe"></iframe>
+            <iframe class="banner-embed" src="/banner-infernal.html" title="Banner Infernal — CheChe" aria-label="Banner visual destacado"></iframe>
         </section>
 
         <!-- Interactive 3D Tarot Cards for Services/Projects -->
         <section class="section" id="services">
             <h2 class="section-title">Servicios Destacados</h2>
             <div class="tarot-deck" id="tarotDeck">
-                <div class="tarot-card" data-title="Branding Ceremonial">
+                <div class="tarot-card" role="button" tabindex="0" aria-label="Servicio: Branding Ceremonial" data-title="Branding Ceremonial">
                     <div class="face front"><h4>Branding<br> Ceremonial</h4></div>
                 </div>
-                <div class="tarot-card" data-title="Producción Audiovisual">
+                <div class="tarot-card" role="button" tabindex="0" aria-label="Servicio: Producción Audiovisual" data-title="Producción Audiovisual">
                     <div class="face front"><h4>Producción<br> Audiovisual</h4></div>
                 </div>
-                <div class="tarot-card" data-title="Mentoría y Entrenamiento">
+                <div class="tarot-card" role="button" tabindex="0" aria-label="Servicio: Mentoría y Entrenamiento" data-title="Mentoría y Entrenamiento">
                     <div class="face front"><h4>Mentoría y<br> Entrenamiento</h4></div>
                 </div>
             </div>
@@ -44,11 +44,11 @@
 
         <!-- Audio background control -->
         <audio id="bg-audio" loop preload="auto">
-            <!-- Placeholder: add your audio file at assets/audio/bg-loop.mp3 in the repo or host somewhere -->
-            <source src="assets/audio/bg-loop.mp3" type="audio/mpeg">
+            <!-- Streaming audio from Google Drive (CheCheTanás Music) -->
+            <source src="https://docs.google.com/uc?export=download&id=1j_YP1Af5JUQLm0vns--GClNPzfmIdpwp" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-        <button id="audioToggle" class="audio-toggle" aria-pressed="false">Audio Off</button>
+        <button id="audioToggle" class="audio-toggle" aria-pressed="false" aria-label="Alternar audio de fondo">Audio Off</button>
 
         <!-- Core content sections -->
         <section class="section" id="branding">
@@ -78,7 +78,7 @@
     </main>
 
     <script>
-        // Tarot card mouse tilt
+        // Tarot card mouse tilt + keyboard accessibility
         const deck = document.getElementById('tarotDeck');
         if(deck){
             const cards = deck.querySelectorAll('.tarot-card');
@@ -100,6 +100,13 @@
                     const title = card.dataset.title || 'Servicio';
                     alert(title);
                 });
+                // keyboard activation
+                card.addEventListener('keydown', (e)=>{
+                    if(e.key === 'Enter' || e.key === ' '){
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
             });
         }
 
@@ -107,11 +114,11 @@
         const audio = document.getElementById('bg-audio');
         const toggle = document.getElementById('audioToggle');
         let audioOn = false;
-        toggle.addEventListener('click', ()=>{
+        toggle.addEventListener('click', async ()=>{
             audioOn = !audioOn;
             toggle.textContent = audioOn ? 'Audio On' : 'Audio Off';
             toggle.setAttribute('aria-pressed', audioOn ? 'true' : 'false');
-            if(audioOn){ audio.play().catch(()=>{}); }
+            if(audioOn){ try { await audio.play(); } catch(e) { console.warn('Audio playback prevented', e); } }
             else { audio.pause(); audio.currentTime = 0; }
         });
 
@@ -123,4 +130,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
