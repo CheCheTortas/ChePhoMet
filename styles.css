@@ -1,0 +1,184 @@
+/* Extracted CSS from banner-infernal.html (component styles) */
+:root {
+    --flame: #ff6a00;
+    --ember: #ff3b00;
+    --gold: #d9a441;
+    --stroke: #1a0e00;
+    --beat: 1;   /* Escala modificable por volumen de audio */
+    --glow: 0.6; /* Brillo modificable por volumen de audio */
+}
+
+/* Page baseline (index.html uses #020101 background) */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    background: #020101;
+    color: #e6e6e6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* --- ESTILOS COMPONENTE: BANNER INFERNAL (moved from inline) --- */
+.banner {
+    width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 4px solid var(--ember);
+    box-shadow: 0 0 36px rgba(255,59,0,.35), inset 0 0 60px rgba(0,0,0,.45);
+    isolation: isolate;
+    background: #000 url("fondo-chivo.jpg") center/cover no-repeat;
+    animation: borderGlow 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+    from {
+        box-shadow: 0 0 34px rgba(255,59,0,.35), inset 0 0 60px rgba(0,0,0,.45);
+        border-color: #ff3b00;
+    }
+    to {
+        box-shadow: 0 0 52px rgba(255,140,0,.65), inset 0 0 90px rgba(0,0,0,.55);
+        border-color: #ff8c00;
+    }
+}
+
+/* Capa de Granulado + Vignette Glitch */
+.grit::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(140% 90% at 50% 60%, rgba(0,0,0,0) 55%, rgba(0,0,0,.65) 100%), 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    opacity: .25;
+}
+
+.logo {
+    font-family: "Nosifer", system-ui;
+    letter-spacing: .02em;
+    color: var(--flame);
+    text-shadow: 0 3px 0 #000, 0 0 calc(12px * var(--glow)) rgba(255,106,0,.9);
+    -webkit-text-stroke: 1px var(--stroke);
+}
+
+.slogan {
+    font-family: "Metal Mania", cursive;
+    color: #fff;
+    text-shadow: 0 2px 0 #000;
+}
+
+/* Carrusel de Avatares Dinámicos */
+.avatar {
+    position: relative;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255,90,0,.85);
+    box-shadow: 0 0 calc(32px * var(--glow)) rgba(255,80,0,.55), inset 0 0 32px rgba(0,0,0,.6);
+    transform: scale(calc(1 + (var(--beat) - 1) * .35));
+    transition: transform .08s linear, box-shadow .12s linear;
+    animation: float 6s ease-in-out infinite;
+    background: #000;
+}
+
+.avatar:nth-child(2) { animation-delay: .8s; }
+.avatar:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(calc(1 + (var(--beat) - 1) * .35)); }
+    50% { transform: translateY(-6px) scale(calc(1.02 + (var(--beat) - 1) * .40)); }
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.2) saturate(1.15);
+}
+
+.avatar--familia img {
+    object-position: 38% 40%; /* Ajuste biomecánico de encuadre */
+}
+
+/* Tira de Cartas (Sprite Engine) */
+.carta {
+    width: clamp(86px, 12.5vw, 150px);
+    aspect-ratio: 3/5;
+    border-radius: 12px;
+    background-image: url("cartas.jpg");
+    background-size: 300% 300%;
+    box-shadow: 0 8px 24px rgba(0,0,0,.55), 0 0 calc(16px * var(--glow)) rgba(255,80,0,.45);
+    border: 1px solid rgba(255,180,100,.35);
+    transform-origin: center bottom;
+    opacity: 0;
+    transform: translateY(16px) scale(.92);
+    animation: pop 9s linear infinite;
+}
+
+.carta:nth-child(1) { animation-delay: 0s; }
+.carta:nth-child(2) { animation-delay: .6s; }
+.carta:nth-child(3) { animation-delay: 1.2s; }
+.carta:nth-child(4) { animation-delay: 1.8s; }
+.carta:nth-child(5) { animation-delay: 2.4s; }
+
+@keyframes pop {
+    0%, 100% { opacity: 0; transform: translateY(18px) scale(.92); }
+    5%, 20% { opacity: 1; transform: translateY(0) scale(1); }
+    25% { opacity: 0; transform: translateY(-18px) scale(.95); }
+}
+
+/* ---------- INDEX PAGE ADDITIONS: Visual tokens, cards, audio, socials ---------- */
+:root {
+    --bg: #020101;
+    --gold: #c5a059;
+    --cyan: #00ffff;
+}
+
+.header-site {
+    padding: 36px 20px;
+    text-align: center;
+    color: var(--gold);
+}
+
+.header-site h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.6rem;
+    margin: 0;
+    color: var(--gold);
+    letter-spacing: .06em;
+}
+
+.header-site p.lead {
+    font-family: 'UnifrakturCook', cursive;
+    color: var(--cyan);
+    margin-top: 8px;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+.section { background: transparent; margin-top: 28px; padding: 18px; border-radius: 10px; }
+.card-grid { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
+
+/* Tarot cards 3D interactive */
+.tarot-deck { perspective: 1200px; display:flex; gap:18px; justify-content:center; align-items:flex-end; }
+.tarot-card {
+    width: 180px; height: 300px; border-radius: 12px; background:#111; box-shadow: 0 12px 28px rgba(0,0,0,.6), 0 0 18px rgba(0,0,0,.45) inset;
+    transform-style: preserve-3d; transition: transform .18s ease, box-shadow .18s ease; cursor: pointer; display:flex; align-items:center; justify-content:center; color:#fff;
+    border: 1px solid rgba(197,160,89,.12);
+    background-image: linear-gradient(180deg, rgba(10,10,10,.8), rgba(0,0,0,.6));
+}
+.tarot-card .face { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; backface-visibility: hidden; }
+.tarot-card .back { transform: rotateY(180deg); }
+.tarot-card h4 { font-family: 'Cinzel', serif; color: var(--gold); margin: 0; padding: 8px; text-align:center; }
+
+/* Audio toggle */
+.audio-toggle { position: fixed; right: 18px; bottom: 18px; z-index: 1000; background: rgba(0,0,0,.6); color: var(--cyan); border: 1px solid rgba(0,255,255,.08); padding: 10px 14px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(4px); }
+
+/* Social links */
+.socials { display:flex; gap:12px; justify-content:center; margin-top:18px; }
+.socials a { color: var(--cyan); text-decoration:none; border:1px solid rgba(0,255,255,.06); padding:8px 10px; border-radius:8px; background: rgba(255,255,255,.02); }
+
+/* Responsive */
+@media (max-width:640px){ .tarot-card { width: 140px; height: 240px; } .header-site h1{font-size:1.8rem;} }

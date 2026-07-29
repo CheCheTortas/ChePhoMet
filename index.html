@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CheChe Portfolio — Ceremonial, Producción, Mentoría</title>
+
+    <!-- Google Fonts for portfolio visual style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Link shared styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Tiny inline layout tweaks -->
+    <style>
+        .hero { padding: 36px 18px; text-align:center; }
+        .featured { margin-top: 18px; }
+        iframe.banner-embed { width:100%; height:480px; border:0; border-radius:12px; overflow:hidden; }
+        .section-title { font-family: 'Cinzel', serif; color: var(--gold); }
+    </style>
+</head>
+<body>
+    <header class="header-site">
+        <h1>CheChe — Rituales Creativos & Alto Rendimiento</h1>
+        <p class="lead">Branding Ceremonial · Producción Audiovisual · Mentoría y Entrenamiento Deportivo</p>
+    </header>
+
+    <main class="container">
+        <!-- Featured banner (iframe to isolate banner styles) -->
+        <section class="featured">
+            <iframe class="banner-embed" src="/banner-infernal.html" title="Banner Infernal — CheChe"></iframe>
+        </section>
+
+        <!-- Interactive 3D Tarot Cards for Services/Projects -->
+        <section class="section" id="services">
+            <h2 class="section-title">Servicios Destacados</h2>
+            <div class="tarot-deck" id="tarotDeck">
+                <div class="tarot-card" data-title="Branding Ceremonial">
+                    <div class="face front"><h4>Branding<br> Ceremonial</h4></div>
+                </div>
+                <div class="tarot-card" data-title="Producción Audiovisual">
+                    <div class="face front"><h4>Producción<br> Audiovisual</h4></div>
+                </div>
+                <div class="tarot-card" data-title="Mentoría y Entrenamiento">
+                    <div class="face front"><h4>Mentoría y<br> Entrenamiento</h4></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audio background control -->
+        <audio id="bg-audio" loop preload="auto">
+            <!-- Placeholder: add your audio file at audio/bg-loop.mp3 in the repo or host somewhere -->
+            <source src="audio/bg-loop.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="audioToggle" class="audio-toggle" aria-pressed="false">Audio Off</button>
+
+        <!-- Core content sections -->
+        <section class="section" id="branding">
+            <h3 class="section-title">Branding Ceremonial</h3>
+            <p>Rituales visuales y construcción simbólica de identidad para eventos, lanzamientos y ceremonias de marca.</p>
+        </section>
+
+        <section class="section" id="audiovisual">
+            <h3 class="section-title">Producción Audiovisual</h3>
+            <p>Producción de piezas con alto valor simbólico: spots, documentales cortos y contenido para redes con estética ritual.</p>
+        </section>
+
+        <section class="section" id="mentoria">
+            <h3 class="section-title">Mentoría y Entrenamiento Deportivo</h3>
+            <p>Planes de entrenamiento, coaching mental y preparación integral basada en experiencia competitiva y operativa.</p>
+        </section>
+
+        <!-- Social links -->
+        <div class="socials" aria-label="Redes sociales">
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://wa.me/5255197014486" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://t.me/" target="_blank" rel="noopener">Telegram</a>
+            <a href="https://discord.com/" target="_blank" rel="noopener">Discord</a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+        </div>
+
+    </main>
+
+    <script>
+        // Tarot card mouse tilt
+        const deck = document.getElementById('tarotDeck');
+        if(deck){
+            const cards = deck.querySelectorAll('.tarot-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e)=>{
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+                    const rotateX = (y * -18).toFixed(2);
+                    const rotateY = (x * 18).toFixed(2);
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                    card.style.boxShadow = `${-rotateY*2}px ${rotateX*2}px 30px rgba(0,0,0,0.6)`;
+                });
+                card.addEventListener('mouseleave', ()=>{
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                });
+                card.addEventListener('click', ()=>{
+                    const title = card.dataset.title || 'Servicio';
+                    alert(title);
+                });
+            });
+        }
+
+        // Audio toggle
+        const audio = document.getElementById('bg-audio');
+        const toggle = document.getElementById('audioToggle');
+        let audioOn = false;
+        toggle.addEventListener('click', ()=>{
+            audioOn = !audioOn;
+            toggle.textContent = audioOn ? 'Audio On' : 'Audio Off';
+            toggle.setAttribute('aria-pressed', audioOn ? 'true' : 'false');
+            if(audioOn){ audio.play().catch(()=>{}); }
+            else { audio.pause(); audio.currentTime = 0; }
+        });
+
+        // Basic keyboard toggle
+        document.addEventListener('keydown',(e)=>{
+            if(e.key === 'm' || e.key === 'M'){
+                toggle.click();
+            }
+        });
+    </script>
+</body>
+</html>
