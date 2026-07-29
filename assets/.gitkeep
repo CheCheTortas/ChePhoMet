@@ -1,0 +1,6 @@
+# assets
+
+This folder contains static assets used by the site: images and audio.
+
+- Place images at the root of assets/ (e.g. assets/avatar-cheche.jpg)
+- Place audio loops under assets/audio/ (e.g. assets/audio/bg-loop.mp3)

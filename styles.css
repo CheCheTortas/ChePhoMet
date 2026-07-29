@@ -28,7 +28,7 @@ body {
     border: 4px solid var(--ember);
     box-shadow: 0 0 36px rgba(255,59,0,.35), inset 0 0 60px rgba(0,0,0,.45);
     isolation: isolate;
-    background: #000 url("fondo-chivo.jpg") center/cover no-repeat;
+    background: #000 url("assets/fondo-chivo.jpg") center/cover no-repeat;
     animation: borderGlow 2.8s ease-in-out infinite alternate;
 }
 
@@ -107,7 +107,7 @@ body {
     width: clamp(86px, 12.5vw, 150px);
     aspect-ratio: 3/5;
     border-radius: 12px;
-    background-image: url("cartas.jpg");
+    background-image: url("assets/cartas.jpg");
     background-size: 300% 300%;
     box-shadow: 0 8px 24px rgba(0,0,0,.55), 0 0 calc(16px * var(--glow)) rgba(255,80,0,.45);
     border: 1px solid rgba(255,180,100,.35);
@@ -182,3 +182,9 @@ body {
 
 /* Responsive */
 @media (max-width:640px){ .tarot-card { width: 140px; height: 240px; } .header-site h1{font-size:1.8rem;} }
+
+/* Layout helpers moved from index.html inline */
+.hero { padding: 36px 18px; text-align:center; }
+.featured { margin-top: 18px; }
+iframe.banner-embed { width:100%; height:480px; border:0; border-radius:12px; overflow:hidden; }
+.section-title { font-family: 'Cinzel', serif; color: var(--gold); }
